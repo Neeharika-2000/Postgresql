@@ -1,0 +1,123 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+psql (14.5)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \l
+                                                  List of databases
+     Name     |  Owner   | Encoding |          Collate           |           Ctype            |   Access privileges
+--------------+----------+----------+----------------------------+----------------------------+-----------------------
+ ivy_training | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ postgres     | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ template0    | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+              |          |          |                            |                            | postgres=CTc/postgres
+ template1    | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+              |          |          |                            |                            | postgres=CTc/postgres
+(4 rows)
+
+
+postgres=# \c ivy_training;
+You are now connected to database "ivy_training" as user "postgres".
+ivy_training=# create table Employee(eno int, ename text, JOB text, MGR int, HIREDATE date, Sal int, COMM int, Dept int);
+CREATE TABLE
+ivy_training=# \d
+          List of relations
+ Schema |   Name   | Type  |  Owner
+--------+----------+-------+----------
+ public | employee | table | postgres
+(1 row)
+
+
+ivy_training=# \d Employee;
+               Table "public.employee"
+  Column  |  Type   | Collation | Nullable | Default
+----------+---------+-----------+----------+---------
+ eno      | integer |           |          |
+ ename    | text    |           |          |
+ job      | text    |           |          |
+ mgr      | integer |           |          |
+ hiredate | date    |           |          |
+ sal      | integer |           |          |
+ comm     | integer |           |          |
+ dept     | integer |           |          |
+
+
+ivy_training=# insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7369,'Sunita Sharma','CLERK',7902,'1980-12-17',2800,NULL,20),(7499,'Ashok Singhal','SALESMAN',7698,'1981-02-20',3600,300,30),(7521,'Rohit Rana','SALESMAN',7698,'1981-02-22',5250,500,30);
+INSERT 0 3
+ivy_training=# select* from Employee;
+ eno  |     ename     |   job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK    | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN | 7698 | 1981-02-22 | 5250 |  500 |   30
+(3 rows)
+
+ivy_training=#  insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7566,'Jyoti Lamba','MANAGER',7839,'1981-04-02',4975,NULL,20),
+ivy_training-# (7654,'Martin S','SALESMAN',7698,'1981-09-28',6250,1400,30),
+ivy_training-# (7698,'Binod Goel','MANAGER',7839,'1981-05-01',5850,NULL,30),
+ivy_training-# (7782,'Chetan Gupta','MANAGER',7839,'1981-06-09',2450,NULL,10),
+ivy_training-#  (7788,'Sudhir Rawat','ANALYST',7566,'1987-04-19',5000,NULL,20);
+INSERT 0 5
+ivy_training=# select* from Employee;
+ eno  |     ename     |   job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK    | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN | 7698 | 1981-02-22 | 5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER  | 7839 | 1981-04-02 | 4975 |      |   20
+ 7654 | Martin S      | SALESMAN | 7698 | 1981-09-28 | 6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER  | 7839 | 1981-05-01 | 5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER  | 7839 | 1981-06-09 | 2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST  | 7566 | 1987-04-19 | 5000 |      |   20
+(8 rows)
+
+ivy_training=# insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7839,'Kavita Sharma','PRESIDENT',NULL,'1981-11-17',5000,NULL,10),
+ivy_training-# (7844,'Tushar Tiwari','SALESMAN',7698,'1981-09-08',4500,0,30),
+ivy_training-# (7876,'Anand Rathi','CLERK',7788,'1987-05-23',6100,NULL,20),
+ivy_training-# (7900,'Jaydeep Rana','CLERK',7698,'1981-12-03',4950,NULL,30);
+INSERT 0 4
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+-----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 | 5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 | 4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 | 6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 | 5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 | 2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 | 5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 | 5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 | 4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 | 6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 | 4950 |      |   30
+(12 rows)
+
+
+ivy_training=#  insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7902,'Sumit Vais','ANALYST',7566,'1981-12-03',3500,3600,20),
+ivy_training-# (7934,'Manoj Kaushik','CLERK',7782,'1981-01-23',5300,NULL,10);
+INSERT 0 2
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+-----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 | 5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 | 4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 | 6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 | 5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 | 2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 | 5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 | 5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 | 4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 | 6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 | 4950 |      |   30
+ 7902 | Sumit Vais    | ANALYST   | 7566 | 1981-12-03 | 3500 | 3600 |   20
+ 7934 | Manoj Kaushik | CLERK     | 7782 | 1981-01-23 | 5300 |      |   10
+(14 rows)
