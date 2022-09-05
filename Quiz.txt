@@ -1,0 +1,113 @@
+1.
+ivy_training=# select orders.order_no,orders.purchase_amount,orders.order_date,salesman.salesman_id from orders join salesman on salesman.salesman_id=orders.salesman_id where salesman.name ='Rajan';
+ order_no | purchase_amount | order_date | salesman_id
+----------+-----------------+------------+-------------
+    70002 |           65.26 | 2012-10-05 |        5001
+    70005 |          2400.6 | 2012-07-27 |        5001
+    70008 |            5760 | 2012-09-10 |        5001
+    70013 |          3045.6 | 2012-04-25 |        5001
+(4 rows)
+
+2.
+ivy_training=# select orders.order_no,orders.purchase_amount,orders.order_date,salesman.salesman_id from orders join salesman on salesman.salesman_id=orders.salesman_id where salesman.city ='Agra';
+ order_no | purchase_amount | order_date | salesman_id
+----------+-----------------+------------+-------------
+    70002 |           65.26 | 2012-10-05 |        5001
+    70005 |          2400.6 | 2012-07-27 |        5001
+    70008 |            5760 | 2012-09-10 |        5001
+    70013 |          3045.6 | 2012-04-25 |        5001
+(4 rows)
+3.
+ivy_training=# select salesman_id from orders where customer_id =3002;
+ salesman_id
+-------------
+        5001
+        5001
+        5001
+(3 rows)
+
+
+ivy_training=# select order_no from orders where salesman_id =5001;
+ order_no
+----------
+    70002
+    70005
+    70008
+    70013
+(4 rows)
+
+ivy_training=# select salesman_id from orders where customer_id =3004;
+ salesman_id
+-------------
+        5006
+(1 row)
+
+
+ivy_training=# select order_no from orders where salesman_id =5006;
+ order_no
+----------
+    70010
+(1 row)
+4.
+ivy_training=# select orders.order_no, orders.purchase_amount from orders where purchase_amount>
+(select avg(purchase_amount) from orders where order_date='2012-10-10');
+ order_no | purchase_amount
+----------+-----------------
+    70005 |          2400.6
+    70008 |            5760
+    70003 |          2480.4
+    70013 |          3045.6
+(4 rows)
+
+5. 
+ivy_training=# select orders.order_no,salesman.city from orders join salesman on orders.salesman_id=salesman.salesman_id where salesman.city='Agra';
+ order_no | city
+----------+------
+    70002 | Agra
+    70005 | Agra
+    70008 | Agra
+    70013 | Agra
+(4 rows)
+6.
+ivy_training=# select commission,salesman_id from salesman where city='Bangalore';
+ commission | salesman_id
+------------+-------------
+       0.13 |        5002
+(1 row)
+7.
+
+ivy_training=# select orders.order_no, orders.purchase_amount from orders where purchase_amount
+               <(select avg(purchase_amount) from orders where order_date='2012-09-10');
+ order_no | purchase_amount
+----------+-----------------
+    70001 |           150.5
+    70009 |          270.65
+    70002 |           65.26
+    70004 |           110.5
+    70007 |           948.5
+    70010 |         1983.43
+    70012 |          250.45
+    70011 |           75.29
+(8 rows)
+
+using parameterless function:
+
+ivy_training=# create or replace function returnrows() returns table (order_no int, purchase_amount float) as $data$
+ivy_training$# begin
+ivy_training$# return query select orders.order_no, orders.purchase_amount from orders where orders.purchase_amount<(select avg(orders.purchase_amount) from orders where orders.order_date='2012-09-10');
+ivy_training$# end;
+ivy_training$# $data$ language plpgsql;
+CREATE FUNCTION
+ivy_training=# select returnrows();
+   returnrows
+-----------------
+ (70001,150.5)
+ (70009,270.65)
+ (70002,65.26)
+ (70004,110.5)
+ (70007,948.5)
+ (70010,1983.43)
+ (70012,250.45)
+ (70011,75.29)
+(8 rows)
+
