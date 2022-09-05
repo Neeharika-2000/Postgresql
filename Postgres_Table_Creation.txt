@@ -1,0 +1,652 @@
+Server [localhost]:
+Database [postgres]:
+Port [5432]:
+Username [postgres]:
+Password for user postgres:
+psql (14.5)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \l
+                                                  List of databases
+     Name     |  Owner   | Encoding |          Collate           |           Ctype            |   Access privileges
+--------------+----------+----------+----------------------------+----------------------------+-----------------------
+ ivy_training | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ postgres     | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ template0    | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+              |          |          |                            |                            | postgres=CTc/postgres
+ template1    | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+              |          |          |                            |                            | postgres=CTc/postgres
+(4 rows)
+
+
+postgres=# \c ivy_training;
+You are now connected to database "ivy_training" as user "postgres".
+ivy_training=# create table Employee(eno int, ename text, JOB text, MGR int, HIREDATE date, Sal int, COMM int, Dept int);
+CREATE TABLE
+ivy_training=# \d
+          List of relations
+ Schema |   Name   | Type  |  Owner
+--------+----------+-------+----------
+ public | employee | table | postgres
+(1 row)
+
+
+ivy_training=# \d Employee;
+               Table "public.employee"
+  Column  |  Type   | Collation | Nullable | Default
+----------+---------+-----------+----------+---------
+ eno      | integer |           |          |
+ ename    | text    |           |          |
+ job      | text    |           |          |
+ mgr      | integer |           |          |
+ hiredate | date    |           |          |
+ sal      | integer |           |          |
+ comm     | integer |           |          |
+ dept     | integer |           |          |
+
+
+ivy_training=# insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7369,'Sunita Sharma','CLERK',7902,'1980-12-17',2800,NULL,20),(7499,'Ashok Singhal','SALESMAN',7698,'1981-02-20',3600,300,30),(7521,'Rohit Rana','SALESMAN',7698,'1981-02-22',5250,500,30);
+INSERT 0 3
+ivy_training=# select* from Employee;
+ eno  |     ename     |   job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK    | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN | 7698 | 1981-02-22 | 5250 |  500 |   30
+(3 rows)
+
+ivy_training=#  insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7566,'Jyoti Lamba','MANAGER',7839,'1981-04-02',4975,NULL,20),
+ivy_training-# (7654,'Martin S','SALESMAN',7698,'1981-09-28',6250,1400,30),
+ivy_training-# (7698,'Binod Goel','MANAGER',7839,'1981-05-01',5850,NULL,30),
+ivy_training-# (7782,'Chetan Gupta','MANAGER',7839,'1981-06-09',2450,NULL,10),
+ivy_training-#  (7788,'Sudhir Rawat','ANALYST',7566,'1987-04-19',5000,NULL,20);
+INSERT 0 5
+ivy_training=# select* from Employee;
+ eno  |     ename     |   job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK    | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN | 7698 | 1981-02-22 | 5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER  | 7839 | 1981-04-02 | 4975 |      |   20
+ 7654 | Martin S      | SALESMAN | 7698 | 1981-09-28 | 6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER  | 7839 | 1981-05-01 | 5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER  | 7839 | 1981-06-09 | 2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST  | 7566 | 1987-04-19 | 5000 |      |   20
+(8 rows)
+
+ivy_training=# insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7839,'Kavita Sharma','PRESIDENT',NULL,'1981-11-17',5000,NULL,10),
+ivy_training-# (7844,'Tushar Tiwari','SALESMAN',7698,'1981-09-08',4500,0,30),
+ivy_training-# (7876,'Anand Rathi','CLERK',7788,'1987-05-23',6100,NULL,20),
+ivy_training-# (7900,'Jaydeep Rana','CLERK',7698,'1981-12-03',4950,NULL,30);
+INSERT 0 4
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+-----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 | 5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 | 4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 | 6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 | 5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 | 2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 | 5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 | 5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 | 4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 | 6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 | 4950 |      |   30
+(12 rows)
+
+
+ivy_training=#  insert into EMPLOYEE(eno,ename,job,mgr,hiredate,sal,comm,dept)values(7902,'Sumit Vais','ANALYST',7566,'1981-12-03',3500,3600,20),
+ivy_training-# (7934,'Manoj Kaushik','CLERK',7782,'1981-01-23',5300,NULL,10);
+INSERT 0 2
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+-----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 | 5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 | 4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 | 6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 | 5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 | 2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 | 5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 | 5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 | 4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 | 6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 | 4950 |      |   30
+ 7902 | Sumit Vais    | ANALYST   | 7566 | 1981-12-03 | 3500 | 3600 |   20
+ 7934 | Manoj Kaushik | CLERK     | 7782 | 1981-01-23 | 5300 |      |   10
+(14 rows)
+
+-----------------------------------------------------------------------------------------
+01-09-2022(Thurs)
+SQL DAY2
+-----------------------------------------------------------------------------------------
+
+1.
+(a) To select all the columns of the above table. 
+select * from  employee;                                                                                           
+(b) To list the name and employee number from the above table.                                 
+select ename,eno from  employee;            
+(c) To list all names, hiredate and salary of all employees.            
+select ename,hiredate,salary from employee;
+(d) To display the employee name and the incremented value of SAL as SAL+ 300.     
+
+        select ename, salary+300 as salary from employee;        select ename, salary+300 as incremented_salary from employee;        
+(e) To list the employee name and his annual salary (Annual salary=12 *sal +100).          
+select ename, salary * 12+100 as salary from employee;   select ename, salary * 12+100 as annual_salary from employee;                        
+(f) Display the ename and sal where comm is NULL.    
+
+select ename,salary from employee where comm is null;                        
+(g) To list the distinct department number from the table.    
+
+    select distinct(dept) from employee;                        
+(h) To list the unique jobs from the table.          
+select distinct(job) from employee;                        
+(i) To list the salary where salary is less than the commission.
+
+select salary from employee where salary<comm;                            
+(j) To list the salary between 3000 and 4000.
+
+select salary from employee where salary between 3000 and 4000;                            
+(k) To list the mgr which are IN 7902, 7566, 7788.            
+ select ename from employee where mgr in (7902,7566,7788);                    
+(l) To list the ename starting with 'S'.               
+select * from employee where ename like 'S%';            
+(m) To list all the columns where salary is greater than 4100.           
+select * from employee where salary > 4100;                        
+(n) To list all the columns in the ascending order of hiredate.  
+ select * from employee order by hiredate asc;           
+(o) To list all the columns in the ascending order of deptno and descending order of salary
+select * from employee order by dept desc,asc deptno;    
+ like 1
+
+2.
+(p) To display the employee name and job of employees hired between Feb 20, 1981 and May 1, 1981.
+   ==> select ename,job from employee  where hiredate between '1981-02-20' and '1981-05-01';
+								
+(q) To display the employee name and deptno of all employees in department 20 and 30 in alphabetical ORDER BY name.
+   ==> select ename, dept from employee where dept in (20,30) order by ename asc;
+								
+(r) To list the name and salary of all the employees who earn more than 1200 and are in department 10 or 40.
+   ==> select sal, ename from employee where sal>1200 and dept in (10,40);
+								
+(s) To list name and hiredate of all the employees who are hired in 1981.
+   ==> select ename,hiredate from employee  where hiredate between '1981-01-01' and '1981-12-31';
+								
+(t) To list all the employees who do not have manager. 	
+   ==> select ename from employee where NOT job='MANAGER';
+							
+(u) To list name and salary of all employees who earn commissions.
+   ==>  select ename,sal from employee where comm >0;	
+							
+(v) To list the names of all employees where the second letter of their name is an a.
+   ==> select ename from employee where ename like '_a%';
+								
+(w) To list the names and job of all the employees who work in department 20 and their manager is 7788.
+   ==> select ename, job from employee where dept=20 and mgr=7788;
+								
+To delete								
+(x) Write the output of the following:
+								
+(i) SELECT ENAME, 12 SAL+ COMM FROM EMPLOYEE WHERE ENAME='Ashok Singhal' ;
+     
+ivy_training=# select ename,(12*sal +comm) from employee where ename='Ashok Singhal';
+     ename     | ?column?
+---------------+----------
+ Ashok Singhal |    43500
+(1 row)
+    
+(ii)  SELECT ENAME FROM EMPLOYEE WHERE ENAME LIKE  '_a%' ;    								
+
+      ename
+---------------
+ Martin S
+ Kavita Sharma
+ Jaydeep Rana
+ Manoj Kaushik
+(4 rows)
+
+							
+(iii) SELECT ENAME,mgr from employee where mgr is null;
+     ename     | mgr
+---------------+-----
+ Kavita Sharma |
+(1 row)
+
+
+===> Pasted in chat to explore:
+binary search tree
+btree, hash, gist, spgist, gin, and brin.
+
+==> creating index:
+create index search_results on table1(id);
+create index search_results on table1(id,name);
+
+
+3.
+Given the following TEACHER relation. Write SQL command for question (a) to (k) and the output for (l).														
+														
+                        TABLE : TEACHER														
+														
+No	Name	Age	Department	DOJ	Salary	Sex								
+1	Jugal	34	Computer	1997-01-10	12000	M								
+2	Sharmila	31	History	1998-03-24	20000	F								
+3	Sandeep	32	Maths	1996-12-12	30000	M								
+4	Sangeeta	35	History	1999-07-01	40000	F								
+5	Rakesh	42	Maths	1997-09-05	25000	M								
+6	Shyam	50	History	1998-06-27	30000	M								
+7	Shiv Om	44	Computer	1997-02-25	21000	M								
+8	Shalakha	33	Maths	1997-07-31	20000	F								
+														
+(a) Write a command to describe the structure of the above table. 
+==>\d Teacher;														
+(b) To select all the columns of the above table.
+==>select* from Teacher;														
+(c) To show all information about the teacher of History department.	
+==>select* from Teacher where department='History';													
+(d) To list the name of female teachers who are in Maths department.
+==> select name from Teacher where department='Maths' and sex='F';
+
+(e) To list names of all teachers with their date of joining in ascending order.
+==>select name from Teacher order by doj;														
+(f) The display teacher's name, salary, age for male teacher only.	
+s==>elect name,age,salary from Teacher where sex='M';													
+(g) To display a report showing name, salary, age and bonus (15% of salary) for all the teachers.
+==>select name,age,salary,(0.15* salary) as bonus from Teacher;														
+(h) To list name and date of joining of all the teachers who are hired in 1997.
+==>select name,doj from Teacher where doj between '1997-01-01' and '1997-12-31';														
+(i) To display only the first three records of teachers.
+==>select* from Teacher limit 3;														
+(j) To display the records of all teachers excluding the first three teachers.
+==>from Teacher offset 3 rows;
+														
+(k) To insert a new row in the TEACHER table with the following data: 9, 'Raja', 26, 'Computer', '1995-05-13', 2300, 'M'.														
+==>insert into Teacher values(9, 'Raja', 26, 'Computer', '1995-05-13', 2300, 'M');
+													
+Give the output of the following SQL statement. [Include the last inserted values in part (k)].	
+													
+(i) SELECT COUNT(DISTINCT department) FROM TEACHER;
+
+ivy_training=# SELECT COUNT(DISTINCT department) FROM TEACHER;
+ count
+-------
+     3
+(1 row)	
+													
+(ii) SELECT MAX(Age) FROM TEACHER WHERE SEX = 'F';
+
+ivy_training=# SELECT MAX(Age) FROM TEACHER WHERE SEX = 'F';
+ max
+-----
+  35
+(1 row)
+														
+(iii) SELECT AVG(Salary) FROM TEACHER WHERE SEX = 'M';
+
+ivy_training=# SELECT AVG(Salary) FROM TEACHER WHERE SEX = 'M';
+        avg
+--------------------
+ 20716.666666666667
+(1 row)
+
+(iv) SELECT SUM(Salary) FROM TEACHER WHERE DOJ < '1997-01-01';
+
+ivy_training=# SELECT SUM(Salary) FROM TEACHER WHERE doj < '1997-01-01';
+  sum
+-------
+ 32300
+(1 row)
+
+
+
+---------------------------------------------------------------------------------------
+02-09-2022(fri)
+SQL DAY3
+----------------------------------------------------------------------------------------
+
+Create table books:
+create table books(book_id text, book_name text, author_name text, publishers text, price int, type  text, qty int);
+inset values:
+ivy_training=# insert into books values('C0001', 'Fast Cook','Lata Kapoor','EPB',355,'Cookery',5),
+ivy_training-# ('F0001', 'The Tears','William Hopkins','First Publ',650,'Fiction',20),
+ivy_training-# ('T0001', 'My First C++','Brain and Brook','EPB',350,'Text',10),
+ivy_training-# ('C0002', 'C++ Brain Works','AW Rossaine','TDH',350,'Text',15),
+ivy_training-# ('F0002', 'ThunderBolts','Anna Roberts','First Publ ',750,'Fiction',50);
+
+create table issued:
+create table issued(book_id text, qty_issued int);
+insert into issued values('T0001',4),
+('C0001',5),
+('F0001',2);
+
+ADDED CONSTRAINTS AFTER CREATING TABLE:
+
+alter table books add primary key(book_id);
+
+alter table issued add foreign key(book_id) references books(book_id);
+
+TO ADD CONSTRAINTS WHILE CREATING TABLE:
+
+ivy_training=# create table person(age int,aadharNo int primary key, name text);
+CREATE TABLE
+ivy_training=# create table bank_details(acc_number int primary key, aadharCard int,balance int,foreign key(aadharCard) references person(aadhar));
+CREATE TABLE
+
+So, after putting the constarint if you wanna add anything in bank_details table it first checks wheather the particular aadharNo is present in person
+table or not, if not present you cannot add in the bank_details table directly. You first need to add in the person table and then add in
+the bank_details table.Then the data gets entered. 
+
+Question 1:
+	
+  (i) To show Book_Name, Author_Name, Price and Quantity_Issued of books of First Publ publishers and Book_Id is present in ISSUED.
+  
+==>select books.book_name,books.author_name,books.price,issued.qty_issued from books right join issued on books.book_id = issued.book_id where publishers= 'First Publ';
+==>select book_name,author_name,price,qty_issued from books,issued where books.book_id = issued.book_id and publishers= 'First Publ';
+
+  (ii) To list the names from books of text type whose Book_Id is present in ISSUED table.
+  
+==> select books.book_name from books inner join issued on books.book_id = issued.book_id where type='Text'; 
+==>  select book_name from books,issued where books.book_id = issued.book_id and type='Text';
+             
+  (iii) To display the Book_Name and Price from table BOOKS in ascending order of their Price.
+   
+==> select book_name,price from books order by price;  
+                  
+  (iv) To increase the price of all books of EPB Publishers by 50.
+
+==>select price, (price+50) as Increased_price from books where publishers='EPB'; 
+
+DISPLAY OUTPUT OF THE FOLLOWING:              
+  (v) SELECT COUNT(*) FROM BOOKS; 
+ count
+-------
+     5
+(1 row)         
+  (vi) SELECT MAX(Price) FROM BOOKS WHERE Quantity >= 15; 
+ max
+-----
+ 750
+(1 row) 
+                  
+  (vii) SELECT Book_Name, Author_Name FROM BOOKS WHERE Publishers ="EPB" ;
+
+ERROR:  column "EPB" does not exist
+LINE 1: ...T Book_Name, Author_Name FROM BOOKS WHERE Publishers ="EPB";
+
+(viii)SELECT Book_Name, Author_Name FROM BOOKS WHERE Publishers ='EPB';
+
+book_name   |   author_name
+--------------+-----------------
+ Fast Cook    | Lata Kapoor
+ My First C++ | Brain and Brook
+(2 rows)
+
+Question2:
+
+TABLE : GARMENT						
+						
+Gcode	Description	Price	Fcode	ReadyDate		
+10023	Pencil Skirt	1150	F03	10-12-19		
+10001	Formal Shirt	1250	F01	10-01-12		
+10012	Informal Shirt	1550	F02	10-01-06		
+10024	Baby Top	750	F03	07-04-09		
+10090	Tulip Skirt	850	F02	09-03-31		
+10019	Evening Gown	850	F03	10-06-06		
+10009	Informal Pant	1500	F02	10-09-20		
+10017	Format Pant	1350	F01	09-03-09		
+10020	Frock	    850	F04	        09-08-09		
+10089	Slacks	750	F03	10-09-31
+
+TABLE : FABRIC						
+						
+Fcode	Type					
+F04	Polyster					
+F02	Cotton					
+F03	Silk					
+F01	Terelene
+
+a. To display the details of all GARMENTS, which have ReadyDate in between 08-Dec-09 and 16-Jun-10 (inclusive of both the dates).
+===>select * from garment where ready_date between '2009-12-08' and '2010-06-16';		
+							
+b. To display FABRIC wise highest and lowest price of GARMENTS from GARMENT table (Display Fcode of each GARMENT alongwith highest and lowest price).
+
+===>select max(garment.price),min(garment.price) from fabric as fabric inner join garment as garment on fabric.fcode=garment.fcode;
+
+===>select max(g.price),min(g.price) from fabric as f inner join garment as g on f.fcode=g.fcode;
+ max  | min
+------+-----
+ 1550 | 750
+(1 row)
+
+c. To display the Gcode and Description from table GARMENT and Type from table FABRIC, with their corresponding matching Fcode.
+
+===>select garment.gcode,garment.fcode,garment.Description,fabric.Type from garment as garment,fabric as fabric where garment.fcode=fabric.fcode;
+
+===>select garment.gcode,garment.description, fabric.type,garment.fcode from garment join fabric on fabric.fcode=garment.fcode;
+
+===>select g.gcode,g.Description,f.Type,g.fcode from garment as g,fabric as f where g.fcode=f.fcode;
+
+===> select garment.gcode,garment.description, fabric.type,garment.fcode from garment,fabric where fabric.fcode=garment.fcode;
+									
+ gcode |  description   |   type   | fcode
+-------+----------------+----------+-------
+ 10020 | Frock          | Polyster | F04
+ 10009 | Informal pant  | Cotton   | F02
+ 10090 | Tulip Skirt    | Cotton   | F02
+ 10012 | informal Shirt | Cotton   | F02
+ 10089 | Slacks         | Silk     | F03
+ 10019 | Evening Gown   | Silk     | F03
+ 10024 | Baby Top       | Silk     | F03
+ 10023 | Pencil Skirt   | Silk     | F03
+ 10017 | Formal pant    | Terelene | F01
+ 10001 | Formal Shirt   | Terelene | F01
+(10 rows)
+
+-----------------------------------------------------------------
+05-09-2022(mon)
+------------------------------------------------------------------
+
+TABLE : EMPLOYEE								
+								
+ENO	ENAME	JOB	MGR	HIREDATE	SAL	COMM	DEPT	
+7369	Sunita Sharma	CLERK	7902	1980-12-17	2800		20	
+7499	Ashok Singhal	SALESMAN	7698	1981-02-20	3600	300	30	
+7521	Rohit Rana	SALESMAN	7698	1981-02-22	5250	500	30	
+7566	Jyoti Lamba	MANAGER	7839	1981-04-02	4975		20	
+7654	Martin S.	SALESMAN	7698	1981-09-28	6250	1400	30	
+7698	Binod Goel	MANAGER	7839	1981-05-01	5850		30	
+7782	Chetan Gupta	MANAGER	7839	1981-06-09	2450		10	
+7788	Sudhir Rawat	ANALYST	7566	1987-04-19	5000		20	
+7839	Kavita Sharma	PRESIDENT		1981-11-17	5000		10	
+7844	Tushar Tiwari	SALESMAN	7698	1981-09-08	4500	0	30	
+7876	Anand Rathi	CLERK	7788	1987-05-23	6100		20	
+7900	Jaydeep Rana	CLERK	7698	1981-12-03	4950		30	
+7902	Sumit Vats	ANALYST	7566	1981-12-03	3500	3600	20	
+7934	Manoj Kaushik	CLERK	7782	1982-01-23	5300		10
+
+Q1
+write a procedure to modify the comm of manoj Kaushik to 3000
+
+ivy_training=# create or replace procedure procedure_replace_val()
+ivy_training-# language plpgsql
+ivy_training-# As $$
+ivy_training$# declare
+ivy_training$# commission int;
+ivy_training$# begin
+ivy_training$# update Employee set Comm = 3000 where ename='Manoj Kaushik';
+ivy_training$# commit;
+ivy_training$# end;
+ivy_training$# $$;
+CREATE PROCEDURE
+ivy_training=# call procedure_replace_val();
+CALL
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  | sal  | comm | dept
+------+---------------+-----------+------+------------+------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 | 2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 | 3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 | 5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 | 4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 | 6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 | 5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 | 2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 | 5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 | 5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 | 4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 | 6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 | 4950 |      |   30
+ 7902 | Sumit Vais    | ANALYST   | 7566 | 1981-12-03 | 3500 | 3600 |   20
+ 7934 | Manoj Kaushik | CLERK     | 7782 | 1981-01-23 | 5300 | 3000 |   10
+(14 rows)
+
+Q2
+write a procedure to insert a record into employee using procedure
+
+ivy_training=# create or replace procedure procedure_insertval()
+ivy_training-# language plpgsql
+ivy_training-# As $$
+ivy_training$# declare
+ivy_training$# row varchar(20);
+ivy_training$# begin
+ivy_training$# insert into Employee (eno, ename, job, mgr, hiredate, sal, comm, dept)values(1,'Divya','Engineer',10,'2022-07-01',50000,1000,05);
+ivy_training$# commit;
+ivy_training$# end;
+ivy_training$# $$;
+CREATE PROCEDURE
+ivy_training=# call procedure_insertval();
+CALL
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  |  sal  | comm | dept
+------+---------------+-----------+------+------------+-------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 |  2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 |  3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 |  5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 |  4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 |  6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 |  5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 |  2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 |  5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 |  5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 |  4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 |  6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 |  4950 |      |   30
+ 7902 | Sumit Vais    | ANALYST   | 7566 | 1981-12-03 |  3500 | 3600 |   20
+ 7934 | Manoj Kaushik | CLERK     | 7782 | 1981-01-23 |  5300 | 3000 |   10
+    1 | Divya         | Engineer  |   10 | 2022-07-01 | 50000 | 1000 |    5
+(15 rows)
+
+TRIGGERS:
+
+create or replace function logs()
+psql_training-# returns trigger
+psql_training-# language plpgsql
+psql_training-# as $$
+psql_training$# begin
+psql_training$#     if NEW.name<>OLD.name then
+psql_training$#     insert into table_two values(OLD.id,OLD.name);
+psql_training$#     end if;
+psql_training$# return NEW
+psql_training$# ;
+psql_training$# end;
+psql_training$# $$;
+CREATE FUNCTION
+psql_training=# create trigger store_logs
+psql_training-# before update
+psql_training-# on table_one
+psql_training-# for each row
+psql_training-# execute procedure logs();
+CREATE TRIGGER
+Q3.
+create copyofemployee table whose structure is same as employee. When ever data gets updated in Employee the old data should get
+ stored in the copyOfEmployee table.
+
+ivy_training=# create or replace function logs()
+ivy_training-# returns trigger
+ivy_training-# language plpgsql
+ivy_training-# As $$
+ivy_training$# begin
+ivy_training$#   if NEW.ename<>OLD.ename then
+ivy_training$#   insert into copyOfEmployee values(OLD.eno,OLD.ename,OLD.job,OLD.mgr,OLD.hiredate,OLD.sal,OLD.comm,OLD.dept);
+ivy_training$#   end if;
+ivy_training$# return NEW;
+ivy_training$# end;
+ivy_training$# $$;
+CREATE FUNCTION
+ivy_training=# create trigger store_logs
+ivy_training-# before update
+ivy_training-# on Employee
+ivy_training-# for each row
+ivy_training-# execute procedure logs();
+CREATE TRIGGER
+ivy_training=# select* from copyOfEmployee;
+ eno | ename | job | mgr | hiredate | sal | comm | dept
+-----+-------+-----+-----+----------+-----+------+------
+(0 rows)
+
+
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  |  sal  | comm | dept
+------+---------------+-----------+------+------------+-------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 |  2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 |  3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 |  5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 |  4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 |  6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 |  5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 |  2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 |  5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 |  5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 |  4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 |  6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 |  4950 |      |   30
+ 7902 | Sumit Vais    | ANALYST   | 7566 | 1981-12-03 |  3500 | 3600 |   20
+ 7934 | Manoj Kaushik | CLERK     | 7782 | 1981-01-23 |  5300 | 3000 |   10
+    1 | Divya         | Engineer  |   10 | 2022-07-01 | 50000 | 1000 |    5
+(15 rows)
+ 
+ivy_training=# update Employee set ename='Neeharika' where eno=1;
+UPDATE 1
+ivy_training=# select* from copyOfEmployee;
+ eno | ename |   job    | mgr |  hiredate  |  sal  | comm | dept
+-----+-------+----------+-----+------------+-------+------+------
+   1 | Divya | Engineer |  10 | 2022-07-01 | 50000 | 1000 |    5
+(1 row)
+
+
+ivy_training=# select* from Employee;
+ eno  |     ename     |    job    | mgr  |  hiredate  |  sal  | comm | dept
+------+---------------+-----------+------+------------+-------+------+------
+ 7369 | Sunita Sharma | CLERK     | 7902 | 1980-12-17 |  2800 |      |   20
+ 7499 | Ashok Singhal | SALESMAN  | 7698 | 1981-02-20 |  3600 |  300 |   30
+ 7521 | Rohit Rana    | SALESMAN  | 7698 | 1981-02-22 |  5250 |  500 |   30
+ 7566 | Jyoti Lamba   | MANAGER   | 7839 | 1981-04-02 |  4975 |      |   20
+ 7654 | Martin S      | SALESMAN  | 7698 | 1981-09-28 |  6250 | 1400 |   30
+ 7698 | Binod Goel    | MANAGER   | 7839 | 1981-05-01 |  5850 |      |   30
+ 7782 | Chetan Gupta  | MANAGER   | 7839 | 1981-06-09 |  2450 |      |   10
+ 7788 | Sudhir Rawat  | ANALYST   | 7566 | 1987-04-19 |  5000 |      |   20
+ 7839 | Kavita Sharma | PRESIDENT |      | 1981-11-17 |  5000 |      |   10
+ 7844 | Tushar Tiwari | SALESMAN  | 7698 | 1981-09-08 |  4500 |    0 |   30
+ 7876 | Anand Rathi   | CLERK     | 7788 | 1987-05-23 |  6100 |      |   20
+ 7900 | Jaydeep Rana  | CLERK     | 7698 | 1981-12-03 |  4950 |      |   30
+ 7902 | Sumit Vais    | ANALYST   | 7566 | 1981-12-03 |  3500 | 3600 |   20
+ 7934 | Manoj Kaushik | CLERK     | 7782 | 1981-01-23 |  5300 | 3000 |   10
+    1 | Neeharika     | Engineer  |   10 | 2022-07-01 | 50000 | 1000 |    5
+(15 rows)
+
+
+  THE CHANGES ARE REFLECTED IN THE ABOVE TABLES.
+
+
+
+
+
+
+
+
+
+
